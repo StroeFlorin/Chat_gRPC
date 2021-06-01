@@ -81,3 +81,4 @@ C:\Users\Andy\Desktop\Chat_gRPC\ChatServer\ChatServer\obj\Debug\netcoreapp3.1\Ch
 C:\Users\Andy\Desktop\Chat_gRPC\ChatServer\ChatServer\obj\Debug\netcoreapp3.1\ChatServer.dll
 C:\Users\Andy\Desktop\Chat_gRPC\ChatServer\ChatServer\obj\Debug\netcoreapp3.1\ChatServer.pdb
 C:\Users\Andy\Desktop\Chat_gRPC\ChatServer\ChatServer\obj\Debug\netcoreapp3.1\ChatServer.genruntimeconfig.cache
+E:\Chat_gRPC\ChatServer\ChatServer\obj\Debug\netcoreapp3.1\ChatServer.csproj.AssemblyReference.cache

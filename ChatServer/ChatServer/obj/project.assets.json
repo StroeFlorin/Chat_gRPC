@@ -629,23 +629,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Alexx\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\flori\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Chat App\\ChatServer\\ChatServer\\ChatServer.csproj",
+      "projectUniqueName": "E:\\Chat_gRPC\\ChatServer\\ChatServer\\ChatServer.csproj",
       "projectName": "ChatServer",
-      "projectPath": "D:\\Chat App\\ChatServer\\ChatServer\\ChatServer.csproj",
-      "packagesPath": "C:\\Users\\Alexx\\.nuget\\packages\\",
-      "outputPath": "D:\\Chat App\\ChatServer\\ChatServer\\obj\\",
+      "projectPath": "E:\\Chat_gRPC\\ChatServer\\ChatServer\\ChatServer.csproj",
+      "packagesPath": "C:\\Users\\flori\\.nuget\\packages\\",
+      "outputPath": "E:\\Chat_gRPC\\ChatServer\\ChatServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Alexx\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\flori\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -695,7 +695,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

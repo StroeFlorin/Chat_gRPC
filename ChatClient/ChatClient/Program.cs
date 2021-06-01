@@ -12,14 +12,23 @@ namespace ChatClient
         public static readonly GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:5001");
         public static readonly Chat.ChatClient client = new Chat.ChatClient(channel);
         public static readonly ChatMessagesStreaming.ChatMessagesStreamingClient streamingClient = new ChatMessagesStreaming.ChatMessagesStreamingClient(channel);
-
         public static string username;
 
         static async void Login()
         {
             Console.Write("What's your name? ");
-            username = Console.ReadLine();
-            var reply = await client.LoginAsync(new UserRequest { User = username });
+            while (String.IsNullOrWhiteSpace(username))
+            {
+                username = Console.ReadLine();
+            }
+            try
+            {
+                var reply = await client.LoginAsync(new UserRequest { User = username });
+            }
+            catch
+            {
+                ServerDownAlert();
+            }
             Console.Clear();
             Console.WriteLine("You are now connected! Say something...");
         }
@@ -35,26 +44,43 @@ namespace ChatClient
             var reply = await client.SendMessageAsync(new MessageInput { User = username, Message = message });
         }
 
-        static async Task Main(string[] args)
+        static void ServerDownAlert()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Server is down...");
+            Environment.Exit(1);
+        }
+
+        static void Main(string[] args)
+        {
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             Login();
 
+            #region GETTING MESSAGES
             new Thread(async () =>
             {
                 var dataStream = streamingClient.ChatMessagesStreaming(new Empty());
-                await foreach (var messageData in dataStream.ResponseStream.ReadAllAsync())
+                try
                 {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    if (messageData.User.Equals("SERVER"))
+                    await foreach (var messageData in dataStream.ResponseStream.ReadAllAsync())
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        if (messageData.User.Equals("SERVER"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                        }
+                        Console.WriteLine($"[{DateTime.Now}]{messageData.User}: {messageData.Message}");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
                     }
-                    Console.WriteLine($"[{DateTime.Now}]{messageData.User}: {messageData.Message}");
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-
+                }
+                catch
+                {
+                    ServerDownAlert();
                 }
             }).Start();
+            #endregion
 
+            #region SENDING A MESSAGE
             while (true)
             {
                 String message = Console.ReadLine();
@@ -71,10 +97,10 @@ namespace ChatClient
                 }
                 else
                 {
-                    SendMessage(message);              
+                    SendMessage(message);
                 }
-
             }
+            #endregion
         }
     }
 }
