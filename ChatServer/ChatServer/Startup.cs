@@ -31,7 +31,7 @@ namespace ChatServer
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<Services.MainService>();
 
                 endpoints.MapGet("/", async context =>
                 {
