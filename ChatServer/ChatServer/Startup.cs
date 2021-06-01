@@ -32,6 +32,7 @@ namespace ChatServer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<Services.MainService>();
+                endpoints.MapGrpcService<Services.StreamingService>();
 
                 endpoints.MapGet("/", async context =>
                 {
