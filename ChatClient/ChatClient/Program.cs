@@ -45,7 +45,14 @@ namespace ChatClient
                 var dataStream = streamingClient.ChatMessagesStreaming(new Empty());
                 await foreach (var messageData in dataStream.ResponseStream.ReadAllAsync())
                 {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    if (messageData.User.Equals("SERVER"))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
                     Console.WriteLine($"[{DateTime.Now}]{messageData.User}: {messageData.Message}");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+
                 }
             }).Start();
 
