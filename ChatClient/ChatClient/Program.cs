@@ -64,13 +64,13 @@ namespace ChatClient
                 {
                     await foreach (var messageData in dataStream.ResponseStream.ReadAllAsync())
                     {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         if (messageData.User.Equals("SERVER"))
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
                         }
                         Console.WriteLine($"[{DateTime.Now}]{messageData.User}: {messageData.Message}");
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                     }
                 }
                 catch
@@ -93,7 +93,7 @@ namespace ChatClient
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid text");
-                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                 }
                 else
                 {
