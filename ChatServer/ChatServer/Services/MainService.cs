@@ -17,5 +17,10 @@ namespace ChatServer.Services
             ChatData.QueueMessage.messages.Add(new ChatData.Message { Id = new Random().Next(0, int.MaxValue), Username = "SERVER", UserMessage = $"{request.User} has connected!" });
             return Task.FromResult(new Empty());
         }
+        public override Task<Empty> Logout(UserRequest request, ServerCallContext context)
+        {
+            ChatData.QueueMessage.messages.Add(new ChatData.Message { Id = new Random().Next(0, int.MaxValue), Username = "SERVER", UserMessage = $"{request.User} has disconnected!" });
+            return Task.FromResult(new Empty());
+        }
     }
 }
