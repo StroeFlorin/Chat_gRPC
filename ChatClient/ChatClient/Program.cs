@@ -35,7 +35,6 @@ namespace ChatClient
             var reply = await client.SendMessageAsync(new MessageInput { User = username, Message = message });
         }
 
-
         static async Task Main(string[] args)
         {
             Login();
@@ -63,6 +62,12 @@ namespace ChatClient
                 if (message.ToUpper().Equals("/EXIT"))
                 {
                     Logout();
+                }
+                else if (String.IsNullOrWhiteSpace(message))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid text");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                 }
                 else
                 {
