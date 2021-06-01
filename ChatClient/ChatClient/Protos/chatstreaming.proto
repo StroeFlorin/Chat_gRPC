@@ -1,0 +1,14 @@
+  syntax = "proto3";
+
+option csharp_namespace = "ChatClient";
+
+import "google/protobuf/empty.proto";
+
+service ChatMessagesStreaming {
+	rpc ChatMessagesStreaming (google.protobuf.Empty) returns (stream ReceivedMessage);
+	}
+
+message ReceivedMessage{
+	string user = 1;
+	string message = 2;
+}
