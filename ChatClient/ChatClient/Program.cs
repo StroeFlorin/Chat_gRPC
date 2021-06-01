@@ -24,6 +24,18 @@ namespace ChatClient
             Console.WriteLine("You are now connected! Say something...");
         }
 
+        static async void Logout()
+        {
+            var reply = await client.LogoutAsync(new UserRequest { User = username });
+            System.Environment.Exit(1);
+        }
+
+        static async void SendMessage(string message)
+        {
+            var reply = await client.SendMessageAsync(new MessageInput { User = username, Message = message });
+        }
+
+
         static async Task Main(string[] args)
         {
             Login();
@@ -43,12 +55,11 @@ namespace ChatClient
                 Console.SetCursorPosition(0, Console.CursorTop - 1);
                 if (message.ToUpper().Equals("/EXIT"))
                 {
-                    var reply = await client.LogoutAsync(new UserRequest { User = username });
-                    System.Environment.Exit(1);
+                    Logout();
                 }
                 else
                 {
-                    var reply = await client.SendMessageAsync(new MessageInput { User = username, Message = message });
+                    SendMessage(message);              
                 }
 
             }
