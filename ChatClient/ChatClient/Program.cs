@@ -1,5 +1,8 @@
-﻿using Grpc.Net.Client;
+﻿using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
+using Grpc.Net.Client;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChatClient
@@ -18,6 +21,16 @@ namespace ChatClient
             var reply = await client.LoginAsync(new UserRequest { User = username });
             Console.Clear();
             Console.WriteLine("You are now connected! Say something...");
+
+            new Thread(async () =>
+            {
+                var client2 = new ChatMessagesStreaming.ChatMessagesStreamingClient(channel);
+                var dataStream = client2.ChatMessagesStreaming(new Empty());
+                await foreach (var messageData in dataStream.ResponseStream.ReadAllAsync())
+                {
+                    Console.WriteLine($"[{DateTime.Now}]{messageData.User}: {messageData.Message}");
+                }
+            }).Start();
 
             while (true)
             {
