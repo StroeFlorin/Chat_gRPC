@@ -9,23 +9,28 @@ namespace ChatClient
 {
     class Program
     {
-        static async Task Main(string[] args)
-        {
-            
-            var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            String username;
+        public static readonly GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:5001");
+        public static readonly Chat.ChatClient client = new Chat.ChatClient(channel);
+        public static readonly ChatMessagesStreaming.ChatMessagesStreamingClient streamingClient = new ChatMessagesStreaming.ChatMessagesStreamingClient(channel);
 
+        public static string username;
+
+        static async void Login()
+        {
             Console.Write("What's your name? ");
             username = Console.ReadLine();
-            var client = new Chat.ChatClient(channel);
             var reply = await client.LoginAsync(new UserRequest { User = username });
             Console.Clear();
             Console.WriteLine("You are now connected! Say something...");
+        }
+
+        static async Task Main(string[] args)
+        {
+            Login();
 
             new Thread(async () =>
             {
-                var client2 = new ChatMessagesStreaming.ChatMessagesStreamingClient(channel);
-                var dataStream = client2.ChatMessagesStreaming(new Empty());
+                var dataStream = streamingClient.ChatMessagesStreaming(new Empty());
                 await foreach (var messageData in dataStream.ResponseStream.ReadAllAsync())
                 {
                     Console.WriteLine($"[{DateTime.Now}]{messageData.User}: {messageData.Message}");
@@ -38,12 +43,12 @@ namespace ChatClient
                 Console.SetCursorPosition(0, Console.CursorTop - 1);
                 if (message.ToUpper().Equals("/EXIT"))
                 {
-                    reply = await client.LogoutAsync(new UserRequest { User = username });
+                    var reply = await client.LogoutAsync(new UserRequest { User = username });
                     System.Environment.Exit(1);
                 }
                 else
                 {
-                    reply = await client.SendMessageAsync(new MessageInput { User = username, Message = message });
+                    var reply = await client.SendMessageAsync(new MessageInput { User = username, Message = message });
                 }
 
             }
